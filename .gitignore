@@ -1,0 +1,7 @@
+nesco-bot/node_modules/
+nesco-bot/.env
+nesco-bot/*.log
+nesco-bot/customer_logs.txt
+nesco-bot/users.json
+.vscode/
+*.txt

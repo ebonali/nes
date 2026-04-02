@@ -1,0 +1,6 @@
+node_modules/
+.env
+*.log
+customer_logs.txt
+users.json
+package-lock.json
