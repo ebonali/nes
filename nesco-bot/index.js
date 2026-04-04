@@ -28,7 +28,8 @@ const client = wrapper(axios.create({
 
 const NESCO_URL = 'https://customer.nesco.gov.bd/pre/panel';
 const LOG_FILE = path.join(__dirname, 'customer_logs.txt');
-const AD_TEXT = `\n\n📢 *বিজ্ঞাপন:*\nআমরা আপনাদের প্রয়োজন অনুযায়ী যেকোনো ওয়েবসাইট প্রফেশনাল ভাবে বানিয়ে থাকি। যোগাযোগ করুন: @Devify_BD`;
+const AD_TEXT = `\n\n📢 *বিজ্ঞাপন:*\nআমরা আপনাদের প্রয়োজন অনুযায়ী যেকোনো ওয়েবসাইট প্রফেশনাল ভাবে বানিয়ে থাকি। যোগাযোগ করুন: @Devify\\_BD`;
+
 
 
 // ==================== MONGODB SETUP ====================
@@ -99,14 +100,18 @@ async function fetchNescoData(cust_no) {
 }
 
 function formatResult(data) {
+  const safeName = (data.name || '').replace(/[_*`]/g, '');
+  const safeTime = (data.balanceTime || '').replace(/[_*`]/g, '');
+  
   let msg = '';
-  msg += `👤 *গ্রাহক*: ${data.name}\n`;
+  msg += `👤 *গ্রাহক*: ${safeName}\n`;
   msg += `🆔 *কনজ্যুমার*: ${data.cust_no}\n`;
   msg += `📟 *মিটার*: ${data.meterNo}\n`;
   msg += `💰 *ব্যালেন্স*: ${data.balance} TK\n`;
-  if (data.balanceTime) msg += `🕒 *সময়*: ${data.balanceTime}\n`;
+  if (data.balanceTime) msg += `🕒 *সময়*: ${safeTime}\n`;
   return msg;
 }
+
 
 // ==================== COMMANDS ====================
 
