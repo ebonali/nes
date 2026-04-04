@@ -28,6 +28,8 @@ const client = wrapper(axios.create({
 
 const NESCO_URL = 'https://customer.nesco.gov.bd/pre/panel';
 const LOG_FILE = path.join(__dirname, 'customer_logs.txt');
+const AD_TEXT = `\n\n📢 *বিজ্ঞাপন:*\nআমরা আপনাদের প্রয়োজন অনুযায়ী যেকোনো ওয়েবসাইট প্রফেশনাল ভাবে বানিয়ে থাকি। যোগাযোগ করুন: @Devify_BD`;
+
 
 // ==================== MONGODB SETUP ====================
 mongoose.connect(process.env.MONGO_URI)
@@ -264,7 +266,10 @@ bot.command('check', async (ctx) => {
     await new Promise(r => setTimeout(r, 1500));
   }
 
+  fullMsg += AD_TEXT;
+
   try {
+
     await ctx.telegram.editMessageText(ctx.chat.id, statusMsg.message_id, null, fullMsg, { parse_mode: 'Markdown' });
   } catch (e) {
     await ctx.reply(fullMsg, { parse_mode: 'Markdown' });
@@ -281,8 +286,9 @@ bot.on('text', async (ctx) => {
   try {
     const data = await fetchNescoData(cust_no);
     if (data) {
-      const msg = formatResult(data);
+      const msg = formatResult(data) + AD_TEXT;
       await ctx.telegram.editMessageText(ctx.chat.id, statusMsg.message_id, null, msg, { parse_mode: 'Markdown' });
+
       saveToLog(ctx.from, cust_no, msg);
     } else {
       await ctx.telegram.editMessageText(ctx.chat.id, statusMsg.message_id, null, 'কোন ডাটা পাওয়া যায়নি। নম্বরটি সঠিক কিনা দেখুন।');
@@ -319,7 +325,10 @@ async function sendAutoNotifications(period) {
       await new Promise(r => setTimeout(r, 2000));
     }
 
+    msg += AD_TEXT;
+
     try {
+
       await bot.telegram.sendMessage(user.chatId, msg, { parse_mode: 'Markdown' });
     } catch (e) {
       console.error(`Failed to notify user ${user.userId}:`, e.message);
