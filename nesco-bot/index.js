@@ -116,7 +116,7 @@ function formatResult(data) {
 // ==================== COMMANDS ====================
 
 bot.start((ctx) => {
-  ctx.replyWithMarkdown(
+  return ctx.replyWithMarkdown(
     `🔌 *নেস্কো প্রি-পেইড মিটার বট*
 
 স্বাগতম! এই বটের মাধ্যমে আপনি আপনার প্রি-পেইড মিটারের ব্যালেন্স চেক ও অটো নোটিফিকেশন পেতে পারেন।
@@ -134,7 +134,7 @@ bot.start((ctx) => {
 });
 
 bot.help((ctx) => {
-  ctx.replyWithMarkdown(
+  return ctx.replyWithMarkdown(
     `📖 *সাহায্য*
 
 🔹 /add 81034205 — এই নম্বরটি সেভ হবে
@@ -184,7 +184,7 @@ bot.command('add', async (ctx) => {
   if (invalid.length) msg += `❌ ভুল নম্বর: ${invalid.join(', ')}\n`;
   msg += `\n📋 মোট সেভ: ${user.meters.length} টি`;
 
-  ctx.reply(msg);
+  return ctx.reply(msg);
 });
 
 // ===== /remove command =====
@@ -220,7 +220,7 @@ bot.command('remove', async (ctx) => {
   if (notFound.length) msg += `❓ পাওয়া যায়নি: ${notFound.join(', ')}\n`;
   msg += `\n📋 বাকি আছে: ${user.meters.length} টি`;
 
-  ctx.reply(msg);
+  return ctx.reply(msg);
 });
 
 // ===== /list command =====
@@ -239,7 +239,7 @@ bot.command('list', async (ctx) => {
   });
   msg += `\nমোট: ${meters.length} টি`;
 
-  ctx.replyWithMarkdown(msg);
+  return ctx.replyWithMarkdown(msg);
 });
 
 // ===== /check command =====
