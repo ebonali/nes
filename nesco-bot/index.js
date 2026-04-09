@@ -351,6 +351,11 @@ app.get('/', (req, res) => res.send('Bot is running alive!'));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+// ==================== ERROR HANDLING ====================
+bot.catch((err, ctx) => {
+  console.error(`[Bot Error] Update type: ${ctx.updateType}`, err.message);
+});
+
 bot.launch().then(() => {
   console.log('Bot is running with MongoDB & Express...');
 });
